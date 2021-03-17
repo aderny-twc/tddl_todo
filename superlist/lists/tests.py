@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import resolve
 from django.http import HttpRequest
+from django.template.loader import render_to_string
 
 #from views import home_page
 from lists.views import home_page
@@ -15,14 +16,13 @@ class HomePageTest(TestCase):
         found = resolve('/')
         self.assertEqual(found.func, home_page)
 
-    def test_home_page_return_correct_html(self):
-        """Домашняя страница возвращает правильный html"""
-        # Объект при запросе страницы
-        request = HttpRequest()
-        # Передача представлению
-        response = home_page(request)
-        # Извлечение содержимого
-        html = response.content.decode('utf8')
-        self.assertTrue(html.startswith('<html>'))
-        self.assertIn('<title>To-Do lists</title>', html)
-        self.assertTrue(html.endswith('</html>'))
+    def test_test_server_django_returns_correct_html(self):
+        """Home page returns right html"""
+        response = self.client.get('/')
+
+        #html = response.content.decode('utf8')
+        #self.assertTrue(html.startswith('<html>'))
+        #self.assertIn('<title>To-Do lists</title>', html)
+        #self.assertTrue(html.strip().endswith('</html>'))
+
+        self.assertTemplateUsed(response, 'lists/home.html')
