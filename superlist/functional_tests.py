@@ -23,7 +23,7 @@ class NewVisitorTest(unittest.TestCase):
         #Проверка заголовка
         self.assertIn('To-Do', self.browser.title)
         # Получим элемент заголовка
-        header_test = self.browser.find_element_by_tag_name('h1').text
+        header_text = self.browser.find_element_by_tag_name('h1').text
         self.assertIn('To-Do', header_text)
         
         inputbox = self.browser.find_element_by_id('id_new_item')
@@ -40,7 +40,8 @@ class NewVisitorTest(unittest.TestCase):
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
         self.assertTrue(
-                any(row.text == '1: By new item' for row in rows)
+                any(row.text == '1: By new item' for row in rows),
+                "Новый элемент списка не появился в таблице",
                 )
         # Созадание еще одного элемента ...
         self.fail('Закончить тест')
